@@ -13,19 +13,29 @@ import java.net.URL;
  */
 
 public class FetchPopularMoviesTask extends AsyncTask<URL, Void, String>{
+
+    private String mFetchResults;
     @Override
     protected String doInBackground(URL... urls) {
         URL fetchUrl = urls[0];
 
-        String fetchResults = null;
+        mFetchResults = null;
 
         try {
-            fetchResults = NetworkUtils.getResponseFromHttp(fetchUrl);
+            mFetchResults = NetworkUtils.getResponseFromHttp(fetchUrl);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Log.d("MyActivity", fetchResults);
-        return fetchResults;
+        return mFetchResults;
+    }
+
+    public String getFetchResults() {
+        return mFetchResults;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
     }
 }
