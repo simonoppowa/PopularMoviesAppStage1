@@ -2,6 +2,8 @@ package com.github.simonoppowa.popularmoviesappstage1;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.github.simonoppowa.popularmoviesappstage1.model.Movie;
@@ -10,12 +12,17 @@ import com.github.simonoppowa.popularmoviesappstage1.utilities.NetworkUtils;
 
 import org.json.JSONException;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int NUMMBER_COLUMNS = 2;
+
+    private RecyclerView mMovieRecyclerView;
+    private GridLayoutManager mGridLayoutMangaer;
+    private MovieAdapter mMovieAdapter;
 
     private List<Movie> mPopularMovies;
 
@@ -24,11 +31,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //creating list
         mPopularMovies = new ArrayList<>();
 
+        //filling list
         String moviesResultsString = fetchPopularMovies();
 
         setPopularMoviesList(moviesResultsString);
+
+        //creating recyclerView
+        mMovieRecyclerView = (RecyclerView) findViewById(R.id.movie_card_recycler_view);
+
+        mGridLayoutMangaer = new GridLayoutManager(this, NUMMBER_COLUMNS);
+        mMovieRecyclerView.setLayoutManager(mGridLayoutMangaer);
+
+        mMovieAdapter = new MovieAdapter(this, mPopularMovies);
+
+        mMovieRecyclerView.setAdapter(mMovieAdapter);
+
 
     }
 

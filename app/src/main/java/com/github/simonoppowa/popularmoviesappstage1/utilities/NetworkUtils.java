@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 public final class NetworkUtils {
 
+    //MovieUrl String Constants
     private static final String MOVIEDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
     private static final String MOVIEDB_POPULAR_TAG = "popular";
 
@@ -29,6 +30,10 @@ public final class NetworkUtils {
     private static String LANGUAGE_PARAM = "en-US";
     private static String SORT_BY_POPULARITY_PARAM = "popularity.desc";
     private static String SORT_BY_REVIEW_PARAM = "vote_average.desc";
+
+    //MovieImageUrl String Constants
+    private static String MOVIEDB_IMAGE_URL = "https://image.tmdb.org/t/p/";
+    private static String MOVIEDB_IMAGE_SIZE_TAG = "w185";
 
 
     public static URL buildPopularMoviesUrlByPopularity(int page) {
@@ -53,6 +58,12 @@ public final class NetworkUtils {
         Log.d("MyActivity",builtUrl.toString());
 
         return builtUrl;
+    }
+
+    public static String buildMovieImageUrlString(String imagePath) {
+        String imageUrl = MOVIEDB_IMAGE_URL + MOVIEDB_IMAGE_SIZE_TAG + imagePath;
+
+        return imageUrl;
     }
 
     public static String getResponseFromHttp(URL url) throws IOException {

@@ -30,10 +30,6 @@ public class FetchPopularMoviesTask extends AsyncTask<URL, Void, String>{
         return mFetchResults;
     }
 
-    public String getFetchResults() {
-        return mFetchResults;
-    }
-
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);

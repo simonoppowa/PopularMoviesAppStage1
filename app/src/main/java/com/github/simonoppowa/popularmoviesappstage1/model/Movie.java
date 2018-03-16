@@ -9,14 +9,14 @@ public class Movie {
     private int id;
     private String title;
     private String overview;
-    private String poster_path;
+    private String imagePath;
 
 
     public Movie(int id, String title, String overview, String poster_path) {
         this.id = id;
         this.title = title;
         this.overview = overview;
-        this.poster_path = poster_path;
+        this.imagePath = poster_path;
     }
 
     public int getId() {
@@ -31,8 +31,8 @@ public class Movie {
         return overview;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public String getImagePath() {
+        return imagePath;
     }
 
     public void setId(int id) {
@@ -47,7 +47,7 @@ public class Movie {
         this.overview = overview;
     }
 
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
+    public void setImage(String poster_path) {
+        this.imagePath = poster_path;
     }
 }

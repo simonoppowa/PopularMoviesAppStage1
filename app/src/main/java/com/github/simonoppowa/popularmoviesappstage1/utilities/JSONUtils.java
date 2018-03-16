@@ -60,7 +60,6 @@ public class JSONUtils {
 
             movieList.add(newMovie);
         }
-
         return movieList;
     }
 }
