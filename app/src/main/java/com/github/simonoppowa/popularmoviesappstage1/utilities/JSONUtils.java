@@ -21,14 +21,17 @@ public class JSONUtils {
 
     private static final String JSON_ID_TAG = "id";
     private static final String JSON_TITLE_TAG = "title";
+    private static final String JSON_ORIGINAL_TITLE_TAG = "original_title";
     private static final String JSON_OVERVIEW_TAG = "overview";
     private static final String JSON_IMAGE_PATH_TAG = "poster_path";
+    private static final String JSON_USER_RATING_TAG = "vote_average";
 
     public static List<Movie> getMovieListFromJSON(String jsonString) throws JSONException {
 
         //Movie attributes
         int id;
-        String title, overview, image_path;
+        String title, originalTitle, overview, imagePath;
+        float userRating;
 
         //MovieList
         List<Movie> movieList = new ArrayList<>();
@@ -49,14 +52,20 @@ public class JSONUtils {
             //movie title
             title = resultsJsonArray.getJSONObject(i).getString(JSON_TITLE_TAG);
 
+            //movie originalTitle
+            originalTitle = resultsJsonArray.getJSONObject(i).getString(JSON_ORIGINAL_TITLE_TAG);
+
             //movie overview
             overview = resultsJsonArray.getJSONObject(i).getString(JSON_OVERVIEW_TAG);
 
-            //movie image_path
-            image_path = resultsJsonArray.getJSONObject(i).getString(JSON_IMAGE_PATH_TAG);
+            //movie imagePath
+            imagePath = resultsJsonArray.getJSONObject(i).getString(JSON_IMAGE_PATH_TAG);
+
+            //movie user
+            userRating = (float) resultsJsonArray.getJSONObject(i).getDouble(JSON_USER_RATING_TAG);
 
             //movie object
-            Movie newMovie = new Movie(id, title, overview, image_path);
+            Movie newMovie = new Movie(id, title, originalTitle, overview, imagePath, userRating);
 
             movieList.add(newMovie);
         }

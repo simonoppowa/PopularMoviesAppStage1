@@ -8,15 +8,19 @@ public class Movie {
 
     private int id;
     private String title;
+    private String originalTitle;
     private String overview;
     private String imagePath;
+    private float userRating;
 
 
-    public Movie(int id, String title, String overview, String poster_path) {
+    public Movie(int id, String title, String originalTitle, String overview, String poster_path, float userRating) {
         this.id = id;
         this.title = title;
+        this.originalTitle = originalTitle;
         this.overview = overview;
         this.imagePath = poster_path;
+        this.userRating = userRating;
     }
 
     public int getId() {
@@ -49,5 +53,25 @@ public class Movie {
 
     public void setImage(String poster_path) {
         this.imagePath = poster_path;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public float getUserRating() {
+        return userRating;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setUserRating(float userRating) {
+        this.userRating = userRating;
     }
 }
