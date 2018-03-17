@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.simonoppowa.popularmoviesappstage1.model.Movie;
 import com.github.simonoppowa.popularmoviesappstage1.utilities.JSONUtils;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private RecyclerView mMovieRecyclerView;
     private GridLayoutManager mGridLayoutMangaer;
     private MovieAdapter mMovieAdapter;
+    private TextView mErrorTextView;
 
     private List<Movie> mPopularMovies;
     private boolean sortByPopularity = true;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mMovieRecyclerView = (RecyclerView) findViewById(R.id.movie_card_recycler_view);
+        mErrorTextView = (TextView) findViewById(R.id.error_message_TV);
+
 
         //creating list
         mPopularMovies = new ArrayList<>();
@@ -44,18 +49,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         //filling list
         String moviesResultsString = fetchPopularMovies();
 
-        setPopularMoviesList(moviesResultsString);
+        if(checkForError(moviesResultsString)) {
+            showErrorMessage();
+        }
+
+        else {
+            setPopularMoviesList(moviesResultsString);
+        }
 
         //creating recyclerView
-        mMovieRecyclerView = (RecyclerView) findViewById(R.id.movie_card_recycler_view);
-
         mGridLayoutMangaer = new GridLayoutManager(this, NUMMBER_COLUMNS);
         mMovieRecyclerView.setLayoutManager(mGridLayoutMangaer);
 
         mMovieAdapter = new MovieAdapter(this, mPopularMovies);
 
         mMovieRecyclerView.setAdapter(mMovieAdapter);
-
 
     }
 
@@ -115,29 +123,53 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         popup.show();
     }
 
+    private boolean checkForError(String moviesString) {
+        if(moviesString == null || moviesString == "") {
+            showErrorMessage();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private void showErrorMessage() {
+        mMovieRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorTextView.setVisibility(View.VISIBLE);
+
+    }
+
+    private void showMovieData() {
+        mMovieRecyclerView.setVisibility(View.VISIBLE);
+        mErrorTextView.setVisibility(View.INVISIBLE);
+    }
+
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-        String moviesResultsString;
+        String moviesResultsString = null;
         int itemClicked= item.getItemId();
 
         if(itemClicked == R.id.sort_by_popularity_popup) {
             sortByPopularity = true;
             moviesResultsString = fetchPopularMovies();
-            setPopularMoviesList(moviesResultsString);
-
         }
 
         if(itemClicked == R.id.sort_by_review_popup) {
             sortByPopularity = false;
             moviesResultsString = fetchPopularMovies();
-            setPopularMoviesList(moviesResultsString);
-
         }
+        if(checkForError(moviesResultsString)) {
+            showErrorMessage();
+        }
+        else {
+            setPopularMoviesList(moviesResultsString);
+            showMovieData();
 
-        mMovieAdapter.setPopularMoviesList(mPopularMovies);
-        mMovieAdapter.notifyDataSetChanged();
+            mMovieAdapter.setPopularMoviesList(mPopularMovies);
+            mMovieAdapter.notifyDataSetChanged();
+        }
 
         return false;
     }

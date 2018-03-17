@@ -26,7 +26,6 @@ public class FetchPopularMoviesTask extends AsyncTask<URL, Void, String>{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return mFetchResults;
     }
 

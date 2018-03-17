@@ -3,4 +3,6 @@
     <string name="sort_by_movies">Sort By</string>
     <string name="sort_by_popularity">Sort by popularity</string>
     <string name="sort_by_review">Sort by review</string>
+
+    <string name="error_message">An error has occurred, please check connection</string>
 </resources>
