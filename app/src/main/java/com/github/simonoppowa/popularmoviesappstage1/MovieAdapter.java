@@ -30,6 +30,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         this.mPopularMovieList = popularMovieList;
     }
 
+    public void setPopularMoviesList(List<Movie> popularMoviesList) {
+        mPopularMovieList = popularMoviesList;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 

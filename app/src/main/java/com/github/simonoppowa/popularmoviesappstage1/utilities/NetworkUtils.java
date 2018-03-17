@@ -21,6 +21,7 @@ public final class NetworkUtils {
     //MovieUrl String Constants
     private static final String MOVIEDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
     private static final String MOVIEDB_POPULAR_TAG = "popular";
+    private static final String MOVIEDB_RATING_TAG = "top_rated";
 
     private static final String MOVIEDB_API_KEY_TAG = "api_key";
     private static final String MOVIEDB_LANGUAGE_TAG = "language";
@@ -35,10 +36,12 @@ public final class NetworkUtils {
     private static String MOVIEDB_IMAGE_URL = "https://image.tmdb.org/t/p/";
     private static String MOVIEDB_IMAGE_SIZE_TAG = "w185";
 
+    private static String myApiKey;
+
 
     public static URL buildPopularMoviesUrlByPopularity(int page) {
 
-        String myApiKey = BuildConfig.MY_MOVIE_DB_API_KEY;
+        myApiKey = BuildConfig.MY_MOVIE_DB_API_KEY;
 
         Uri builtUri = Uri.parse(MOVIEDB_BASE_URL + MOVIEDB_POPULAR_TAG).buildUpon()
                 .appendQueryParameter(MOVIEDB_API_KEY_TAG, myApiKey)
@@ -47,17 +50,39 @@ public final class NetworkUtils {
                 .appendQueryParameter(MOVIEDB_PAGE_TAG, Integer.toString(page))
                 .build();
 
-        URL builtUrl = null;
-
-        try {
-            builtUrl = new URL(builtUri.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        URL builtUrl = buildUrl(builtUri);
 
         Log.d("MyActivity",builtUrl.toString());
 
         return builtUrl;
+    }
+
+    public static URL buildPopularMoviesUrlByRating(int page) {
+        myApiKey = BuildConfig.MY_MOVIE_DB_API_KEY;
+        Uri builtUri = Uri.parse(MOVIEDB_BASE_URL + MOVIEDB_RATING_TAG).buildUpon()
+                .appendQueryParameter(MOVIEDB_API_KEY_TAG, myApiKey)
+                .appendQueryParameter(MOVIEDB_LANGUAGE_TAG, LANGUAGE_PARAM)
+                .appendQueryParameter(MOVIEDB_SORT_BY_TAG, SORT_BY_REVIEW_PARAM)
+                .appendQueryParameter(MOVIEDB_PAGE_TAG, Integer.toString(page))
+                .build();
+
+        URL buildUrl = buildUrl(builtUri);
+
+        Log.d("MyActivity", buildUrl.toString());
+
+        return buildUrl;
+    }
+
+    public static URL buildUrl(Uri uri) {
+        URL newUrl = null;
+
+        try {
+            newUrl = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return newUrl;
     }
 
     public static String buildMovieImageUrlString(String imagePath) {
