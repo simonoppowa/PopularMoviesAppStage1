@@ -36,5 +36,5 @@ dependencies {
 }
 
 repositories {
-    mavenCentral();
+    mavenCentral()
 }

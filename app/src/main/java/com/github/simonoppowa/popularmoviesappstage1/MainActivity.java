@@ -24,10 +24,10 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
-    private static final int NUMMBER_COLUMNS = 2;
+    private static final int NUMBER_COLUMNS = 2;
 
     private RecyclerView mMovieRecyclerView;
-    private GridLayoutManager mGridLayoutMangaer;
+    private GridLayoutManager mGridLayoutManager;
     private MovieAdapter mMovieAdapter;
     private TextView mErrorTextView;
 
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
 
         //creating recyclerView
-        mGridLayoutMangaer = new GridLayoutManager(this, NUMMBER_COLUMNS);
-        mMovieRecyclerView.setLayoutManager(mGridLayoutMangaer);
+        mGridLayoutManager = new GridLayoutManager(this, NUMBER_COLUMNS);
+        mMovieRecyclerView.setLayoutManager(mGridLayoutManager);
 
         mMovieAdapter = new MovieAdapter(this, mPopularMovies);
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private boolean checkForError(String moviesString) {
-        if(moviesString == null || moviesString == "") {
+        if(moviesString == null || moviesString.equals("")) {
             showErrorMessage();
             return true;
         }
