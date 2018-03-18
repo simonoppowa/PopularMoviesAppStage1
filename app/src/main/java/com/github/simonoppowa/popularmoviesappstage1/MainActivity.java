@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, MovieAdapter.ListItemClickListener{
 
     private static final int NUMBER_COLUMNS = 2;
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         mGridLayoutManager = new GridLayoutManager(this, NUMBER_COLUMNS);
         mMovieRecyclerView.setLayoutManager(mGridLayoutManager);
 
-        mMovieAdapter = new MovieAdapter(this, mPopularMovies);
+        mMovieAdapter = new MovieAdapter(this, this, mPopularMovies);
 
         mMovieRecyclerView.setAdapter(mMovieAdapter);
 
@@ -172,5 +172,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
 
         return false;
+    }
+
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+           Log.d("MyActivity",  mPopularMovies.get(clickedItemIndex).getTitle());
     }
 }

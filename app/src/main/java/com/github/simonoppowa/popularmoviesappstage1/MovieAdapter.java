@@ -25,8 +25,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     private List<Movie> mPopularMovieList;
 
-    public MovieAdapter(Context context, List<Movie> popularMovieList) {
+    private ListItemClickListener mListItemClickListener;
+
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
+    }
+
+    public MovieAdapter(Context context, ListItemClickListener listener, List<Movie> popularMovieList) {
         this.context = context;
+        this.mListItemClickListener = listener;
         this.mPopularMovieList = popularMovieList;
     }
 
@@ -59,7 +66,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         return mPopularMovieList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView movieImageIV;
         public TextView titleTV;
@@ -71,6 +78,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             movieImageIV = (ImageView) itemView.findViewById(R.id.movie_image);
             titleTV = (TextView) itemView.findViewById(R.id.movie_title);
 
+            itemView.setOnClickListener(this);
+
+               // TODO (1) onClickListener only works on TextView
+            movieImageIV.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            mListItemClickListener.onListItemClick(clickedPosition);
         }
     }
 }
