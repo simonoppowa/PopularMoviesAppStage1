@@ -1,6 +1,7 @@
 package com.github.simonoppowa.popularmoviesappstage1.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Simon on 14.03.2018.
@@ -14,15 +15,17 @@ public class Movie implements Serializable{
     private String overview;
     private String imagePath;
     private float userRating;
+    private Date releaseDate;
 
 
-    public Movie(int id, String title, String originalTitle, String overview, String poster_path, float userRating) {
+    public Movie(int id, String title, String originalTitle, String overview, String poster_path, float userRating, Date releaseDate) {
         this.id = id;
         this.title = title;
         this.originalTitle = originalTitle;
         this.overview = overview;
         this.imagePath = poster_path;
         this.userRating = userRating;
+        this.releaseDate = releaseDate;
     }
 
     public int getId() {
@@ -75,5 +78,13 @@ public class Movie implements Serializable{
 
     public void setUserRating(float userRating) {
         this.userRating = userRating;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }
