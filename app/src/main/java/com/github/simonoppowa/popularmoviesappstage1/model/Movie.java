@@ -1,10 +1,12 @@
 package com.github.simonoppowa.popularmoviesappstage1.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Simon on 14.03.2018.
  */
 
-public class Movie {
+public class Movie implements Serializable{
 
     private int id;
     private String title;

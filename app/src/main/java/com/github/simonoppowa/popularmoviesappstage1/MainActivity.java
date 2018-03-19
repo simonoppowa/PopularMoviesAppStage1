@@ -1,5 +1,7 @@
 package com.github.simonoppowa.popularmoviesappstage1;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,6 +20,7 @@ import com.github.simonoppowa.popularmoviesappstage1.utilities.NetworkUtils;
 
 import org.json.JSONException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -176,6 +179,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-           Log.d("MyActivity",  mPopularMovies.get(clickedItemIndex).getTitle());
+        Log.d("MyActivity",  mPopularMovies.get(clickedItemIndex).getTitle());
+
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+
+        intent.putExtra("Movie", (Serializable) mPopularMovies.get(clickedItemIndex));
+
+        startActivity(intent);
     }
 }
