@@ -86,6 +86,7 @@ public final class NetworkUtils {
     }
 
     public static String buildMovieImageUrlString(String imagePath) {
+           // TODO (1)
         String imageUrl = MOVIEDB_IMAGE_URL + MOVIEDB_IMAGE_SIZE_TAG + imagePath;
 
         return imageUrl;

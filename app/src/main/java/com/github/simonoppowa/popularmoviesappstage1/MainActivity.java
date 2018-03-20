@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        Log.d("MyActivity",  mPopularMovies.get(clickedItemIndex).getTitle());
 
         Intent intent = new Intent(this, MovieDetailActivity.class);
 

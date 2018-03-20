@@ -4,20 +4,63 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.simonoppowa.popularmoviesappstage1.model.Movie;
+import com.github.simonoppowa.popularmoviesappstage1.utilities.NetworkUtils;
+import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
+
+    private TextView mTitleTV;
+    private ImageView mImageIV;
+    private TextView mReleaseDateTV;
+    private TextView mRatingTV;
+    private TextView mOverviewTV;
+
+    private Movie mSelectedMovie;
+
+       // TODO (1) onSaveInstance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        mTitleTV = (TextView) findViewById(R.id.title_tv);
+        mImageIV = (ImageView) findViewById(R.id.image_tv);
+        mReleaseDateTV = (TextView) findViewById(R.id.release_date_tv);
+        mRatingTV = (TextView) findViewById(R.id.rating_tv);
+        mOverviewTV = (TextView) findViewById(R.id.overview_tv);
+
+        setTitle(R.string.movie_detail_name);
+
         Intent intent = getIntent();
 
-        Movie movie = (Movie) intent.getSerializableExtra("Movie");
+        mSelectedMovie = (Movie) intent.getSerializableExtra("Movie");
 
-        Log.d("MyActivity", movie.getTitle());
+        populateUI();
+    }
+
+    private void populateUI() {
+
+        //mTitleTextView
+        mTitleTV.setText(mSelectedMovie.getTitle());
+
+        //mImageIV
+        String imageUrlString = NetworkUtils.buildMovieImageUrlString(mSelectedMovie.getImagePath());
+        Picasso.with(getApplicationContext()).load(imageUrlString).into(mImageIV);
+
+        //mReleaseDate
+        mReleaseDateTV.setText(mSelectedMovie.getReleaseYearString());
+
+        //mOverViewTV
+        mOverviewTV.setText(mSelectedMovie.getOverview());
+
+        //mRatingTV
+        mRatingTV.setText(mSelectedMovie.getUserRating() + "/10");
+
+
     }
 }

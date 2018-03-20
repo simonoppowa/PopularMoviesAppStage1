@@ -1,6 +1,10 @@
 package com.github.simonoppowa.popularmoviesappstage1.model;
 
+import android.util.Log;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -14,11 +18,11 @@ public class Movie implements Serializable{
     private String originalTitle;
     private String overview;
     private String imagePath;
-    private float userRating;
+    private String userRating;
     private Date releaseDate;
 
 
-    public Movie(int id, String title, String originalTitle, String overview, String poster_path, float userRating, Date releaseDate) {
+    public Movie(int id, String title, String originalTitle, String overview, String poster_path, String userRating, Date releaseDate) {
         this.id = id;
         this.title = title;
         this.originalTitle = originalTitle;
@@ -64,7 +68,7 @@ public class Movie implements Serializable{
         return originalTitle;
     }
 
-    public float getUserRating() {
+    public String  getUserRating() {
         return userRating;
     }
 
@@ -76,7 +80,7 @@ public class Movie implements Serializable{
         this.imagePath = imagePath;
     }
 
-    public void setUserRating(float userRating) {
+    public void setUserRating(String  userRating) {
         this.userRating = userRating;
     }
 
@@ -86,5 +90,13 @@ public class Movie implements Serializable{
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getReleaseYearString() {
+        SimpleDateFormat simpleDateRelease = new SimpleDateFormat("yyyy");
+
+        String yearString = simpleDateRelease.format(releaseDate);
+        Log.d("MyActivity", yearString);
+        return yearString;
     }
 }

@@ -28,14 +28,14 @@ public class JSONUtils {
     private static final String JSON_OVERVIEW_TAG = "overview";
     private static final String JSON_IMAGE_PATH_TAG = "poster_path";
     private static final String JSON_USER_RATING_TAG = "vote_average";
-    private static final String JSON_USER_RELEASEDATE_TAG = "release_date";
+    private static final String JSON_USER_RELEASED_TAG = "release_date";
 
     public static List<Movie> getMovieListFromJSON(String jsonString) throws JSONException {
 
         //Movie attributes
         int id;
         String title, originalTitle, overview, imagePath, releaseDateString;
-        float userRating;
+        String  userRating;
         Date releaseDate;
 
         //MovieList
@@ -67,10 +67,10 @@ public class JSONUtils {
             imagePath = resultsJsonArray.getJSONObject(i).getString(JSON_IMAGE_PATH_TAG);
 
             //movie userRating
-            userRating = (float) resultsJsonArray.getJSONObject(i).getDouble(JSON_USER_RATING_TAG);
+            userRating =  resultsJsonArray.getJSONObject(i).getString(JSON_USER_RATING_TAG);
 
             //movie releaseDate
-            releaseDateString = resultsJsonArray.getJSONObject(i).getString(JSON_USER_RELEASEDATE_TAG);
+            releaseDateString = resultsJsonArray.getJSONObject(i).getString(JSON_USER_RELEASED_TAG);
             releaseDate = convertDate(releaseDateString);
 
             //movie object
