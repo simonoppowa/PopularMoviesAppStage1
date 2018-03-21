@@ -1,12 +1,16 @@
 package com.github.simonoppowa.popularmoviesappstage1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,12 +26,14 @@ import org.json.JSONException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, MovieAdapter.ListItemClickListener{
 
     private static final int NUMBER_COLUMNS = 2;
+    private static final String MOVIE_KEY = "movies";
 
     private RecyclerView mMovieRecyclerView;
     private GridLayoutManager mGridLayoutManager;
@@ -49,15 +55,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         //creating list
         mPopularMovies = new ArrayList<>();
 
-        //filling list
-        String moviesResultsString = fetchPopularMovies();
-
-        if(checkForError(moviesResultsString)) {
-            showErrorMessage();
+        if(savedInstanceState != null && savedInstanceState.containsKey(MOVIE_KEY)) {
+           mPopularMovies = savedInstanceState.getParcelableArrayList(MOVIE_KEY);
         }
-
         else {
-            setPopularMoviesList(moviesResultsString);
+            //filling list
+            String moviesResultsString = fetchPopularMovies();
+
+            if(checkForError(moviesResultsString)) {
+                showErrorMessage();
+            }
+
+            else {
+                setPopularMoviesList(moviesResultsString);
+            }
+
         }
 
         //creating recyclerView
@@ -85,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
 
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(MOVIE_KEY, (ArrayList<? extends Parcelable>) mPopularMovies);
     }
 
     private String fetchPopularMovies() {
@@ -182,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         Intent intent = new Intent(this, MovieDetailActivity.class);
 
-        intent.putExtra("Movie", (Serializable) mPopularMovies.get(clickedItemIndex));
+        intent.putExtra(MOVIE_KEY, mPopularMovies.get(clickedItemIndex));
 
         startActivity(intent);
     }

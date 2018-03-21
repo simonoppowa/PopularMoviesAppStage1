@@ -1,5 +1,7 @@
 package com.github.simonoppowa.popularmoviesappstage1.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -11,7 +13,7 @@ import java.util.Date;
  * Created by Simon on 14.03.2018.
  */
 
-public class Movie implements Serializable{
+public class Movie implements Parcelable {
 
     private int id;
     private String title;
@@ -20,6 +22,18 @@ public class Movie implements Serializable{
     private String imagePath;
     private String userRating;
     private Date releaseDate;
+
+    //Parcelable Constructor
+
+    public Movie(Parcel input) {
+        id = input.readInt();
+        title = input.readString();
+        originalTitle = input.readString();
+        overview = input.readString();
+        imagePath = input.readString();
+        userRating = input.readString();
+        releaseDate = new Date(input.readLong());
+    }
 
 
     public Movie(int id, String title, String originalTitle, String overview, String poster_path, String userRating, Date releaseDate) {
@@ -68,7 +82,7 @@ public class Movie implements Serializable{
         return originalTitle;
     }
 
-    public String  getUserRating() {
+    public String getUserRating() {
         return userRating;
     }
 
@@ -80,7 +94,7 @@ public class Movie implements Serializable{
         this.imagePath = imagePath;
     }
 
-    public void setUserRating(String  userRating) {
+    public void setUserRating(String userRating) {
         this.userRating = userRating;
     }
 
@@ -99,4 +113,38 @@ public class Movie implements Serializable{
         Log.d("MyActivity", yearString);
         return yearString;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(originalTitle);
+        parcel.writeString(overview);
+        parcel.writeString(imagePath);
+        parcel.writeString(userRating);
+        parcel.writeLong(releaseDate.getTime());
+
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+
+
+        @Override
+        public Movie createFromParcel(Parcel parcel) {
+            return new Movie(parcel);
+        }
+
+        @Override
+        public Movie[] newArray(int i) {
+            return new Movie[i];
+        }
+    };
+
 }
+

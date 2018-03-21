@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
+    private static final String MOVIE_KEY = "movies";
+
     private TextView mTitleTV;
     private ImageView mImageIV;
     private TextView mReleaseDateTV;
@@ -20,8 +22,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView mOverviewTV;
 
     private Movie mSelectedMovie;
-
-       // TODO (1) onSaveInstance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        mSelectedMovie = (Movie) intent.getSerializableExtra("Movie");
+        mSelectedMovie = (Movie) intent.getParcelableExtra(MOVIE_KEY);
 
         populateUI();
     }

@@ -17,9 +17,9 @@
             <TextView
                 android:id="@+id/title_tv"
                 android:textColor="#ffffff"
-                android:background="@color/colorPrimary"
+                android:background="@color/movieTitleBackground"
                 android:textSize="32sp"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
