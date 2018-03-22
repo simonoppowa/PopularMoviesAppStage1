@@ -46,7 +46,7 @@ public class JSONUtils {
         //full Json Object
         JSONObject fullJson = new JSONObject(jsonString);
 
-        Log.d("MyActivity", fullJson.toString(4));
+        Log.d("TAG", fullJson.toString(4));
 
         //results Json Array
         JSONArray resultsJsonArray = fullJson.getJSONArray(JSON_RESULTS_TAG);
@@ -69,7 +69,6 @@ public class JSONUtils {
             imagePath = resultsJsonArray.getJSONObject(i).getString(JSON_IMAGE_PATH_TAG);
             fullImagePath = NetworkUtils.buildMovieImageUrlString(imagePath);
 
-
             //movie userRating
             userRating =  resultsJsonArray.getJSONObject(i).getString(JSON_USER_RATING_TAG);
 
@@ -77,7 +76,6 @@ public class JSONUtils {
             releaseDateString = resultsJsonArray.getJSONObject(i).getString(JSON_USER_RELEASED_TAG);
             releaseDate = convertDate(releaseDateString);
 
-               // TODO (1)
             //movie object
             Movie newMovie = new Movie(id, title, originalTitle, overview, fullImagePath, userRating, releaseDate);
 

@@ -23,7 +23,6 @@ public class Movie implements Parcelable {
     private Date releaseDate;
 
     //Parcelable Constructor
-
     private Movie(Parcel input) {
         id = input.readInt();
         title = input.readString();
@@ -109,7 +108,6 @@ public class Movie implements Parcelable {
         SimpleDateFormat simpleDateRelease = new SimpleDateFormat("yyyy", Locale.getDefault());
 
         String yearString = simpleDateRelease.format(releaseDate);
-        Log.d("MyActivity", yearString);
         return yearString;
     }
 

@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         //creating list
         mPopularMovies = new ArrayList<>();
 
+        //checking for rotation
         if(savedInstanceState != null && savedInstanceState.containsKey(MOVIE_KEY)) {
            mPopularMovies = savedInstanceState.getParcelableArrayList(MOVIE_KEY);
         }

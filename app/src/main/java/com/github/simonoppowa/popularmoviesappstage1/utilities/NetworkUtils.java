@@ -18,7 +18,6 @@ import java.util.Scanner;
 
 public final class NetworkUtils {
 
-       // TODO (1)
     //MovieUrl String Constants
     private static final String MOVIEDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
     private static final String MOVIEDB_POPULAR_TAG = "popular";
@@ -27,11 +26,8 @@ public final class NetworkUtils {
     private static final String MOVIEDB_API_KEY_TAG = "api_key";
     private static final String MOVIEDB_LANGUAGE_TAG = "language";
     private static final String MOVIEDB_PAGE_TAG = "page";
-    private static final String MOVIEDB_SORT_BY_TAG = "sort_by";
 
     private static final String LANGUAGE_PARAM = "en-US";
-    private static final String SORT_BY_POPULARITY_PARAM = "popularity.desc";
-    private static final String SORT_BY_REVIEW_PARAM = "vote_average.desc";
 
     //MovieImageUrl String Constants
     private static final String MOVIEDB_IMAGE_URL = "https://image.tmdb.org/t/p/";
@@ -47,13 +43,12 @@ public final class NetworkUtils {
         Uri builtUri = Uri.parse(MOVIEDB_BASE_URL + MOVIEDB_POPULAR_TAG).buildUpon()
                 .appendQueryParameter(MOVIEDB_API_KEY_TAG, myApiKey)
                 .appendQueryParameter(MOVIEDB_LANGUAGE_TAG, LANGUAGE_PARAM)
-                .appendQueryParameter(MOVIEDB_SORT_BY_TAG, SORT_BY_POPULARITY_PARAM)
                 .appendQueryParameter(MOVIEDB_PAGE_TAG, Integer.toString(page))
                 .build();
 
         URL builtUrl = buildUrl(builtUri);
 
-        Log.d("MyActivity",builtUrl.toString());
+        Log.d("TAG",builtUrl.toString());
 
         return builtUrl;
     }
@@ -63,13 +58,12 @@ public final class NetworkUtils {
         Uri builtUri = Uri.parse(MOVIEDB_BASE_URL + MOVIEDB_RATING_TAG).buildUpon()
                 .appendQueryParameter(MOVIEDB_API_KEY_TAG, myApiKey)
                 .appendQueryParameter(MOVIEDB_LANGUAGE_TAG, LANGUAGE_PARAM)
-                .appendQueryParameter(MOVIEDB_SORT_BY_TAG, SORT_BY_REVIEW_PARAM)
                 .appendQueryParameter(MOVIEDB_PAGE_TAG, Integer.toString(page))
                 .build();
 
         URL buildUrl = buildUrl(builtUri);
 
-        Log.d("MyActivity", buildUrl.toString());
+        Log.d("TAG", buildUrl.toString());
 
         return buildUrl;
     }

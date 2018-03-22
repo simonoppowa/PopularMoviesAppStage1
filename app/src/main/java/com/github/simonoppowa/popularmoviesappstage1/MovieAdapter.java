@@ -79,7 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
             itemView.setOnClickListener(this);
 
-               // TODO (1) onClickListener only works on TextView
+            //itemViewClickListener only works on TextView :/
             movieImageIV.setOnClickListener(this);
         }
 
