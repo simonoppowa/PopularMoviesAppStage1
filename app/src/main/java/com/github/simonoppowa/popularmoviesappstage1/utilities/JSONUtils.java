@@ -22,6 +22,7 @@ public class JSONUtils {
 
     private static final String JSON_RESULTS_TAG = "results";
 
+       // TODO (1) removing tags
     private static final String JSON_ID_TAG = "id";
     private static final String JSON_TITLE_TAG = "title";
     private static final String JSON_ORIGINAL_TITLE_TAG = "original_title";
@@ -34,7 +35,7 @@ public class JSONUtils {
 
         //Movie attributes
         int id;
-        String title, originalTitle, overview, imagePath, releaseDateString;
+        String title, originalTitle, overview, imagePath, fullImagePath, releaseDateString;
         String  userRating;
         Date releaseDate;
 
@@ -65,6 +66,8 @@ public class JSONUtils {
 
             //movie imagePath
             imagePath = resultsJsonArray.getJSONObject(i).getString(JSON_IMAGE_PATH_TAG);
+            fullImagePath = NetworkUtils.buildMovieImageUrlString(imagePath);
+
 
             //movie userRating
             userRating =  resultsJsonArray.getJSONObject(i).getString(JSON_USER_RATING_TAG);
@@ -73,8 +76,9 @@ public class JSONUtils {
             releaseDateString = resultsJsonArray.getJSONObject(i).getString(JSON_USER_RELEASED_TAG);
             releaseDate = convertDate(releaseDateString);
 
+               // TODO (1)
             //movie object
-            Movie newMovie = new Movie(id, title, originalTitle, overview, imagePath, userRating, releaseDate);
+            Movie newMovie = new Movie(id, title, originalTitle, overview, fullImagePath, userRating, releaseDate);
 
             movieList.add(newMovie);
         }

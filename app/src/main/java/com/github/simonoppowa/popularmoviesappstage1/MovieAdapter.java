@@ -56,8 +56,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         holder.titleTV.setText(mPopularMovieList.get(position).getTitle());
 
         //setting image to imageView
-        String imageUrlString = NetworkUtils.buildMovieImageUrlString(mPopularMovieList.get(position).getImagePath());
-        Picasso.with(context).load(imageUrlString).into(holder.movieImageIV);
+        Picasso.with(context).load(mPopularMovieList.get(position).getImagePath()).into(holder.movieImageIV);
 
     }
 

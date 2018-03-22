@@ -45,12 +45,16 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void populateUI() {
 
-        //mTitleTextView
-        mTitleTV.setText(mSelectedMovie.getTitle());
+        //mTitleTextView with original title
+        if(mSelectedMovie.getTitle().equals(mSelectedMovie.getOriginalTitle())) {
+            mTitleTV.setText(mSelectedMovie.getTitle());
+        }
+        else {
+            mTitleTV.setText(mSelectedMovie.getTitle() + "\n(" + mSelectedMovie.getOriginalTitle() + ")");
+        }
 
         //mImageIV
-        String imageUrlString = NetworkUtils.buildMovieImageUrlString(mSelectedMovie.getImagePath());
-        Picasso.with(getApplicationContext()).load(imageUrlString).into(mImageIV);
+        Picasso.with(getApplicationContext()).load(mSelectedMovie.getImagePath()).into(mImageIV);
 
         //mReleaseDate
         mReleaseDateTV.setText(mSelectedMovie.getReleaseYearString());
@@ -60,7 +64,5 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         //mRatingTV
         mRatingTV.setText(mSelectedMovie.getUserRating() + "/10");
-
-
     }
 }
