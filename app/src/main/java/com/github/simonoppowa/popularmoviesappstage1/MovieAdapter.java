@@ -1,7 +1,7 @@
 package com.github.simonoppowa.popularmoviesappstage1;
 
 import android.content.Context;
-import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.simonoppowa.popularmoviesappstage1.model.Movie;
-import com.github.simonoppowa.popularmoviesappstage1.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,11 +20,11 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
-    private Context context;
+    private final Context context;
 
     private List<Movie> mPopularMovieList;
 
-    private ListItemClickListener mListItemClickListener;
+    private final ListItemClickListener mListItemClickListener;
 
     public interface ListItemClickListener {
         void onListItemClick(int clickedItemIndex);
@@ -41,8 +40,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         mPopularMovieList = popularMoviesList;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_card, parent, false);
 
@@ -50,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         //setting title to textView
         holder.titleTV.setText(mPopularMovieList.get(position).getTitle());
@@ -67,8 +67,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public ImageView movieImageIV;
-        public TextView titleTV;
+        public final ImageView movieImageIV;
+        public final TextView titleTV;
 
 
         public ViewHolder(View itemView) {

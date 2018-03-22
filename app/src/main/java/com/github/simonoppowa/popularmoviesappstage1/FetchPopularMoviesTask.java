@@ -1,7 +1,6 @@
 package com.github.simonoppowa.popularmoviesappstage1;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.github.simonoppowa.popularmoviesappstage1.utilities.NetworkUtils;
 
@@ -14,12 +13,11 @@ import java.net.URL;
 
 public class FetchPopularMoviesTask extends AsyncTask<URL, Void, String>{
 
-    private String mFetchResults;
     @Override
     protected String doInBackground(URL... urls) {
         URL fetchUrl = urls[0];
 
-        mFetchResults = null;
+        String mFetchResults = null;
 
         try {
             mFetchResults = NetworkUtils.getResponseFromHttp(fetchUrl);

@@ -4,10 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Simon on 14.03.2018.
@@ -25,7 +24,7 @@ public class Movie implements Parcelable {
 
     //Parcelable Constructor
 
-    public Movie(Parcel input) {
+    private Movie(Parcel input) {
         id = input.readInt();
         title = input.readString();
         originalTitle = input.readString();
@@ -107,7 +106,7 @@ public class Movie implements Parcelable {
     }
 
     public String getReleaseYearString() {
-        SimpleDateFormat simpleDateRelease = new SimpleDateFormat("yyyy");
+        SimpleDateFormat simpleDateRelease = new SimpleDateFormat("yyyy", Locale.getDefault());
 
         String yearString = simpleDateRelease.format(releaseDate);
         Log.d("MyActivity", yearString);

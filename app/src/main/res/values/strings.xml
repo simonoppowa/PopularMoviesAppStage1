@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Popular Movies App Stage 1</string>
     <string name="movie_detail_name">Movie details</string>
+    <string name="movie_image_tag">Movie image</string>
 
     <string name="sort_by_movies">Sort By</string>
     <string name="sort_by_popularity">Sort by popularity</string>

@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 public final class NetworkUtils {
 
+       // TODO (1)
     //MovieUrl String Constants
     private static final String MOVIEDB_BASE_URL = "https://api.themoviedb.org/3/movie/";
     private static final String MOVIEDB_POPULAR_TAG = "popular";
@@ -28,13 +29,13 @@ public final class NetworkUtils {
     private static final String MOVIEDB_PAGE_TAG = "page";
     private static final String MOVIEDB_SORT_BY_TAG = "sort_by";
 
-    private static String LANGUAGE_PARAM = "en-US";
-    private static String SORT_BY_POPULARITY_PARAM = "popularity.desc";
-    private static String SORT_BY_REVIEW_PARAM = "vote_average.desc";
+    private static final String LANGUAGE_PARAM = "en-US";
+    private static final String SORT_BY_POPULARITY_PARAM = "popularity.desc";
+    private static final String SORT_BY_REVIEW_PARAM = "vote_average.desc";
 
     //MovieImageUrl String Constants
-    private static String MOVIEDB_IMAGE_URL = "https://image.tmdb.org/t/p/";
-    private static String MOVIEDB_IMAGE_SIZE_TAG = "w185";
+    private static final String MOVIEDB_IMAGE_URL = "https://image.tmdb.org/t/p/";
+    private static final String MOVIEDB_IMAGE_SIZE_TAG = "w185";
 
     private static String myApiKey;
 
@@ -73,7 +74,7 @@ public final class NetworkUtils {
         return buildUrl;
     }
 
-    public static URL buildUrl(Uri uri) {
+    private static URL buildUrl(Uri uri) {
         URL newUrl = null;
 
         try {
@@ -86,7 +87,6 @@ public final class NetworkUtils {
     }
 
     public static String buildMovieImageUrlString(String imagePath) {
-           // TODO (1)
         String imageUrl = MOVIEDB_IMAGE_URL + MOVIEDB_IMAGE_SIZE_TAG + imagePath;
 
         return imageUrl;
@@ -102,7 +102,6 @@ public final class NetworkUtils {
 
             boolean hasInput = scanner.hasNext();
 
-            if(hasInput = scanner.hasNext());
             if(hasInput) {
                 return scanner.next();
             }

@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Simon on 14.03.2018.
@@ -86,7 +87,7 @@ public class JSONUtils {
     }
 
     private static Date convertDate(String releaseDateString) {
-        SimpleDateFormat simpleReleaseDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleReleaseDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         Date releaseDate = null;
         try {

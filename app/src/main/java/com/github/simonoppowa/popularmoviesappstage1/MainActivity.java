@@ -1,17 +1,12 @@
 package com.github.simonoppowa.popularmoviesappstage1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,9 +19,7 @@ import com.github.simonoppowa.popularmoviesappstage1.utilities.NetworkUtils;
 
 import org.json.JSONException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -117,9 +110,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 fetchResults = fetchPopularMoviesTask.execute(NetworkUtils.buildPopularMoviesUrlByRating(1)).get();
             }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 

@@ -3,12 +3,10 @@ package com.github.simonoppowa.popularmoviesappstage1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.simonoppowa.popularmoviesappstage1.model.Movie;
-import com.github.simonoppowa.popularmoviesappstage1.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 public class MovieDetailActivity extends AppCompatActivity {
