@@ -2,7 +2,6 @@ package com.github.simonoppowa.popularmoviesappstage1.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

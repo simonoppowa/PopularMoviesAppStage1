@@ -23,7 +23,6 @@ public class JSONUtils {
 
     private static final String JSON_RESULTS_TAG = "results";
 
-       // TODO (1) removing tags
     private static final String JSON_ID_TAG = "id";
     private static final String JSON_TITLE_TAG = "title";
     private static final String JSON_ORIGINAL_TITLE_TAG = "original_title";
