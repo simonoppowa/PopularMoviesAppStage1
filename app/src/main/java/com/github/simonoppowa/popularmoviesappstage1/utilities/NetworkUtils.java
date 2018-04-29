@@ -33,9 +33,19 @@ public final class NetworkUtils {
     private static final String MOVIEDB_IMAGE_URL = "https://image.tmdb.org/t/p/";
     private static final String MOVIEDB_IMAGE_SIZE_TAG = "w185";
 
+    //MovieVideos String Constants
+    private static final String MOVIEDB_VIDEOS_TAG = "videos";
+
+    //MovieReviewUrl String Constants
+    private static final String MOVIEDB_REVIEWS_TAG = "reviews";
+
     private static String myApiKey;
 
-
+    /**
+     * Builds URL: https://api.themoviedb.org/3/movie/popular?api_key=___&language=en-US&page=1
+     * @param page
+     * @return
+     */
     public static URL buildPopularMoviesUrlByPopularity(int page) {
 
         myApiKey = BuildConfig.MY_MOVIE_DB_API_KEY;
@@ -48,7 +58,7 @@ public final class NetworkUtils {
 
         URL builtUrl = buildUrl(builtUri);
 
-        Log.d("TAG",builtUrl.toString());
+        Log.d("MYTAG",builtUrl.toString());
 
         return builtUrl;
     }
@@ -63,9 +73,40 @@ public final class NetworkUtils {
 
         URL buildUrl = buildUrl(builtUri);
 
-        Log.d("TAG", buildUrl.toString());
+        Log.d("MYTAG", buildUrl.toString());
 
         return buildUrl;
+    }
+
+    public static URL buildMovieReviewsUrl(int movieId) {
+        myApiKey = BuildConfig.MY_MOVIE_DB_API_KEY;
+
+        String reviewUrl = MOVIEDB_BASE_URL +  String.valueOf(movieId) + "/" + MOVIEDB_REVIEWS_TAG;
+
+        Uri builtUri = Uri.parse(reviewUrl).buildUpon()
+                .appendQueryParameter(MOVIEDB_API_KEY_TAG, myApiKey)
+                .build();
+        URL builtUrl = buildUrl(builtUri);
+
+        Log.d("MYTAG",  builtUri.toString());
+
+        return builtUrl;
+    }
+
+    public static URL buildMovieVideosUrl(int movieId) {
+        myApiKey = BuildConfig.MY_MOVIE_DB_API_KEY;
+
+        String videosUrl = MOVIEDB_BASE_URL + String.valueOf(movieId) + "/" + MOVIEDB_VIDEOS_TAG;
+
+        Uri builtUri = Uri.parse(videosUrl).buildUpon()
+                .appendQueryParameter(MOVIEDB_API_KEY_TAG, myApiKey)
+                .build();
+        URL builtUrl = buildUrl(builtUri);
+
+        Log.d("MYTAG", builtUrl.toString());
+
+        return builtUrl;
+
     }
 
     private static URL buildUrl(Uri uri) {
@@ -85,6 +126,7 @@ public final class NetworkUtils {
 
         return imageUrl;
     }
+
 
     public static String getResponseFromHttp(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
