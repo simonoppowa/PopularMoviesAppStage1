@@ -3,6 +3,8 @@ package com.github.simonoppowa.popularmoviesappstage1.utilities;
 import android.util.Log;
 
 import com.github.simonoppowa.popularmoviesappstage1.model.Movie;
+import com.github.simonoppowa.popularmoviesappstage1.model.Review;
+import com.github.simonoppowa.popularmoviesappstage1.model.Video;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +25,7 @@ public class JSONUtils {
 
     private static final String JSON_RESULTS_TAG = "results";
 
+    //movie tags
     private static final String JSON_ID_TAG = "id";
     private static final String JSON_TITLE_TAG = "title";
     private static final String JSON_ORIGINAL_TITLE_TAG = "original_title";
@@ -31,23 +34,32 @@ public class JSONUtils {
     private static final String JSON_USER_RATING_TAG = "vote_average";
     private static final String JSON_USER_RELEASED_TAG = "release_date";
 
+    //video tags
+    private static final String JSON_KEY_TAG = "key";
+    private static final String JSON_NAME_TAG = "name";
+    private static final String JSON_SITE_TAG = "site";
+    private static final String JSON_TYPE_TAG = "type";
+
+    //review tags
+    private static final String JSON_AUTHOR_TAG = "author";
+    private static final String JSON_CONTENT_TAG = "content";
+
     public static List<Movie> getMovieListFromJSON(String jsonString) throws JSONException {
 
         //Movie attributes
         int id;
-        String title, originalTitle, overview, imagePath, fullImagePath, releaseDateString;
-        String  userRating;
+        String title, originalTitle, overview, imagePath, fullImagePath, releaseDateString, userRating;
         Date releaseDate;
 
         //MovieList
         List<Movie> movieList = new ArrayList<>();
 
-        //full Json Object
+        //full Json object
         JSONObject fullJson = new JSONObject(jsonString);
 
-        Log.d("TAG", fullJson.toString(4));
+        Log.d("MYTAG", fullJson.toString(4));
 
-        //results Json Array
+        //results Json array
         JSONArray resultsJsonArray = fullJson.getJSONArray(JSON_RESULTS_TAG);
 
         for(int i = 0; i < resultsJsonArray.length(); i++) {
@@ -94,5 +106,72 @@ public class JSONUtils {
         }
 
         return releaseDate;
+    }
+
+    public static List<Video> getMovieVideosFromJSON(String jsonString) throws JSONException {
+
+        //video attributes
+        String key, site, name, type;
+
+        List<Video> videoList = new ArrayList<>();
+
+        //full json object
+        JSONObject fullJson = new JSONObject(jsonString);
+
+        //results Json array
+        JSONArray resultsJsonArray = fullJson.getJSONArray(JSON_RESULTS_TAG);
+
+        Log.d("MYTAG", fullJson.toString(4));
+        for(int i = 0; i < resultsJsonArray.length(); i++) {
+            //video key
+            key = resultsJsonArray.getJSONObject(i).getString(JSON_KEY_TAG);
+
+            //video site
+            site = resultsJsonArray.getJSONObject(i).getString(JSON_SITE_TAG);
+
+            //video name
+            name = resultsJsonArray.getJSONObject(i).getString(JSON_NAME_TAG);
+
+            //video type
+            type = resultsJsonArray.getJSONObject(i).getString(JSON_TYPE_TAG);
+
+            Video newVideo = new Video(key, site, name, type);
+
+            videoList.add(newVideo);
+        }
+        return videoList;
+    }
+
+    public static List<Review> getMovieReviewsFromJSON(String jsonString) throws JSONException {
+
+        //review attributes
+        int movieId;
+        String author, content;
+
+        List<Review>  reviewList = new ArrayList<>();
+
+        //full json object
+        JSONObject fullJson = new JSONObject(jsonString);
+
+        //results Json array
+        JSONArray resultsJsonArray = fullJson.getJSONArray(JSON_RESULTS_TAG);
+
+        Log.d("MYTAG", fullJson.toString(4));
+
+        for(int i = 0; i < resultsJsonArray.length(); i++) {
+            //movieId
+            movieId = fullJson.getInt(JSON_ID_TAG);
+
+            //review author
+            author = resultsJsonArray.getJSONObject(i).getString(JSON_AUTHOR_TAG);
+
+            //review content
+            content = resultsJsonArray.getJSONObject(i).getString(JSON_CONTENT_TAG);
+
+            Review newReview = new Review(movieId, author, content);
+
+            reviewList.add(newReview);
+        }
+        return reviewList;
     }
 }
