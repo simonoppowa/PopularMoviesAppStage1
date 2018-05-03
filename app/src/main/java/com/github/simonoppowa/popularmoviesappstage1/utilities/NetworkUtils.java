@@ -109,7 +109,7 @@ public final class NetworkUtils {
 
     }
 
-    private static URL buildUrl(Uri uri) {
+    public static URL buildUrl(Uri uri) {
         URL newUrl = null;
 
         try {

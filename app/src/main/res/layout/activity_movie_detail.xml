@@ -9,10 +9,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
 
             <TextView
                 android:id="@+id/title_tv"
+                tools:text="TestMovie"
                 android:textColor="#ffffff"
                 android:background="@color/movieTitleBackground"
                 android:textSize="32sp"
@@ -27,6 +29,7 @@
 
                 <ImageView
                     android:id="@+id/image_tv"
+                    tools:src="@color/cardview_dark_background"
                     android:contentDescription="@string/movie_image_tag"
                     android:layout_margin="10dp"
                     android:adjustViewBounds="true"
@@ -40,6 +43,7 @@
 
                     <TextView
                         android:id="@+id/release_date_tv"
+                        tools:text="2018"
                         android:textSize="20sp"
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
@@ -47,6 +51,7 @@
 
                     <TextView
                         android:id="@+id/rating_tv"
+                        tools:text="8.8/10"
                         android:layout_margin="5dp"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
@@ -58,10 +63,30 @@
             </LinearLayout>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/overview_tag"
+                android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+            <TextView
                 android:id="@+id/overview_tv"
-                android:layout_margin="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="16sp"
+                tools:text="@string/text_long" />
+
+            <include
+                android:id="@+id/movie_extra_detail"
+                layout="@layout/activity_movie_detail_extra"
+                android:visibility="invisible"/>
+
+            <ProgressBar
+                android:id="@+id/extra_detail_progressbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"/>
 
         </LinearLayout>
 
