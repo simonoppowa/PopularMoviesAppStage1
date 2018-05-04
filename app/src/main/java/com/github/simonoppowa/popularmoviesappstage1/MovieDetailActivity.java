@@ -1,20 +1,26 @@
 package com.github.simonoppowa.popularmoviesappstage1;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.simonoppowa.popularmoviesappstage1.data.MovieContract;
 import com.github.simonoppowa.popularmoviesappstage1.model.Movie;
 import com.github.simonoppowa.popularmoviesappstage1.model.Review;
 import com.github.simonoppowa.popularmoviesappstage1.model.Video;
@@ -30,9 +36,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.*;
+import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.COLUMN_MOVIE_ID;
+
 public class MovieDetailActivity extends AppCompatActivity implements VideoAdapter.ListItemClickListener{
 
-    private static final String MOVIE_KEY = "movies";
+    private static final String MOVIE_KEY = MainActivity.MOVIE_KEY;
 
     private RecyclerView mVideoRecyclerView;
     private LinearLayoutManager mHorizontalLinearLayoutManager;
@@ -56,24 +65,31 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
     private TextView mReviewErrorMessage;
     private TextView mVideoErrorMessage;
 
+    private ImageButton mFavoritesButton;
+    private TextView mFavoritesLabel;
+
     private Movie mSelectedMovie;
+    private boolean isFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        mTitleTV = (TextView) findViewById(R.id.title_tv);
-        mImageIV = (ImageView) findViewById(R.id.image_tv);
-        mReleaseDateTV = (TextView) findViewById(R.id.release_date_tv);
-        mRatingTV = (TextView) findViewById(R.id.rating_tv);
-        mOverviewTV = (TextView) findViewById(R.id.overview_tv);
+        mTitleTV = findViewById(R.id.title_tv);
+        mImageIV = findViewById(R.id.image_tv);
+        mReleaseDateTV = findViewById(R.id.release_date_tv);
+        mRatingTV = findViewById(R.id.rating_tv);
+        mOverviewTV = findViewById(R.id.overview_tv);
 
-        mReviewErrorMessage = (TextView) findViewById(R.id.review_error_message);
-        mVideoErrorMessage = (TextView) findViewById(R.id.video_error_message);
+        mReviewErrorMessage = findViewById(R.id.review_error_message);
+        mVideoErrorMessage = findViewById(R.id.video_error_message);
 
         mExtraDetailLayout = findViewById(R.id.movie_extra_detail);
         mExtraDetailProgressBar = findViewById(R.id.extra_detail_progressbar);
+
+        mFavoritesButton = findViewById(R.id.favorite_icon);
+        mFavoritesLabel = findViewById(R.id.favorites_label);
 
         mVideoList = new ArrayList<>();
         mReviewList = new ArrayList<>();
@@ -108,6 +124,8 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 
         populateMainUI();
 
+        showFavoriteButton();
+
         new ExtraDetailsQueryTask(this).execute();
     }
 
@@ -130,14 +148,42 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         mOverviewTV.setText(mSelectedMovie.getOverview());
 
         mRatingTV.setText(mSelectedMovie.getUserRating() + "/10");
+    }
 
+    @SuppressLint("StaticFieldLeak")
+    private void showFavoriteButton() {
+        new AsyncTask<Cursor, Void, Cursor>() {
+            @Override
+            protected Cursor doInBackground(Cursor... cursors) {
+                String stringId = Integer.toString(mSelectedMovie.getId());
+
+                Uri uri = MovieContract.MovieEntry.CONTENT_MOVIES_URL;
+                uri = uri.buildUpon().appendPath(stringId).build();
+
+                return getContentResolver().query(uri, null, null, null, null);
+            }
+
+            @Override
+            protected void onPostExecute(Cursor cursor) {
+                super.onPostExecute(cursor);
+
+                if(cursor == null || cursor.getCount() == 0) {
+                    setButtonNoFavorite();
+                } else {
+                    setButttonFavorite();
+                }
+
+                mFavoritesButton.setVisibility(View.VISIBLE);
+                mFavoritesLabel.setVisibility(View.VISIBLE);
+            }
+        }.execute();
     }
 
     public class ExtraDetailsQueryTask extends AsyncTask {
 
         private final Context context;
 
-        public ExtraDetailsQueryTask(Context context) {
+        ExtraDetailsQueryTask(Context context) {
             this.context = context;
         }
 
@@ -183,6 +229,59 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             mExtraDetailLayout.setVisibility(View.VISIBLE);
             mExtraDetailProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    public void onFavoritesClicked(View view) {
+        if(!isFavorite) {
+
+            //add to favorites content provider
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COLUMN_MOVIE_ID, mSelectedMovie.getId());
+            contentValues.put(COLUMN_MOVIE_TITLE, mSelectedMovie.getTitle());
+
+            Uri uri = getContentResolver().insert(CONTENT_MOVIES_URL, contentValues);
+
+            if(uri != null) {
+                //movie was successfully inserted
+                Toast toast = Toast.makeText(this, R.string.add_to_favorites, Toast.LENGTH_SHORT);
+                toast.show();
+
+                setButttonFavorite();
+
+            } else {
+                //TODO couldn't insert movie
+            }
+
+
+        } else {
+            Toast toast = Toast.makeText(this,R.string.remove_from_favorites, Toast.LENGTH_SHORT);
+            toast.show();
+
+            String stringId = Integer.toString(mSelectedMovie.getId());
+
+            Uri uri = MovieContract.MovieEntry.CONTENT_MOVIES_URL;
+            uri = uri.buildUpon().appendPath(stringId).build();
+
+            int deleted = getContentResolver().delete(uri, null, null);
+
+            if(deleted != 0) {
+                setButtonNoFavorite();
+            } else {
+                //TODO couldn't deleted movie
+            }
+        }
+    }
+
+    private void setButttonFavorite() {
+        mFavoritesButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_36px));
+        mFavoritesLabel.setText(R.string.remove_favorites_label);
+        isFavorite = true;
+    }
+
+    private void setButtonNoFavorite() {
+        mFavoritesLabel.setText(R.string.add_favorites_label);
+        mFavoritesButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_border_black_36px));
+        isFavorite = false;
     }
 
     @Override

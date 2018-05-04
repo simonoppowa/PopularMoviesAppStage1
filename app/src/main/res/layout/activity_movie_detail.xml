@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,19 +44,45 @@
 
                     <TextView
                         android:id="@+id/release_date_tv"
-                        tools:text="2018"
-                        android:textSize="20sp"
-                        android:layout_margin="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Small"
+                        android:textSize="16sp"
+                        tools:text="2018" />
 
-                    <TextView
-                        android:id="@+id/rating_tv"
-                        tools:text="8.8/10"
-                        android:layout_margin="5dp"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:id="@+id/rating_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textAppearance="@android:style/TextAppearance.Material.Large"
+                            android:textSize="24sp"
+                            tools:text="8.8/10" />
+
+                        <ImageView
+                            android:id="@+id/star_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/rating_tv"
+                            app:layout_constraintStart_toEndOf="@+id/rating_tv"
+                            app:layout_constraintTop_toTopOf="@+id/rating_tv"
+                            app:srcCompat="@drawable/ic_grade_black_24px" />
+
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <include
+                        layout="@layout/movie_detail_favorite"/>
 
 
                 </LinearLayout>

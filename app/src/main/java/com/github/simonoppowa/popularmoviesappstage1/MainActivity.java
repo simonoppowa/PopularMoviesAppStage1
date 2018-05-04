@@ -1,9 +1,9 @@
 package com.github.simonoppowa.popularmoviesappstage1;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, MovieAdapter.ListItemClickListener, FetchPopularMoviesTask.AsyncTaskCompleteListener{
 
     private static final int NUMBER_COLUMNS = 2;
-    private static final String MOVIE_KEY = "movies";
+    public static final String MOVIE_KEY = "movies";
 
     private RecyclerView mMovieRecyclerView;
     private GridLayoutManager mGridLayoutManager;
@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         if(menuItemClicked == R.id.sort_by) {
             setPopupMenu();
+        } else {
+            Intent favoritesIntent = new Intent(this, FavoritesActivity.class);
+            startActivity(favoritesIntent);
         }
 
         return true;
@@ -137,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         mMovieRecyclerView.setLayoutManager(mGridLayoutManager);
 
         mMovieAdapter = new MovieAdapter(this, this, mPopularMovies);
-
         mMovieRecyclerView.setAdapter(mMovieAdapter);
     }
 
@@ -160,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-
         Intent intent = new Intent(this, MovieDetailActivity.class);
 
         intent.putExtra(MOVIE_KEY, mPopularMovies.get(clickedItemIndex));

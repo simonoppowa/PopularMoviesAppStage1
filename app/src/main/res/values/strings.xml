@@ -2,22 +2,34 @@
 
     <!--activity_main-->
     <string name="app_name">Popular Movies App Stage 1</string>
-    <string name="movie_detail_name">Movie details</string>
+
     <string name="movie_image_tag">Movie image</string>
 
-    <string name="sort_by_movies">Sort By</string>
+    <string name="sort_by_movies_menu">Sort By</string>
     <string name="sort_by_popularity">Sort by popularity</string>
     <string name="sort_by_review">Sort by review</string>
+    <string name="favorites_menu">Favorites</string>
 
     <!--error messages-->
     <string name="error_message">An error has occurred, please check connection</string>
     <string name="no_videos_message">No videos available</string>
     <string name="no_reviews_message">No reviews available</string>
+    <string name="no_favorites_added">No favorites added</string>
 
     <!--activity_detail-->
+    <string name="movie_detail_name">Movie details</string>
     <string name="videos_tag">Videos</string>
     <string name="reviews_tag">Reviews</string>
     <string name="overview_tag">Overview</string>
+    <string name="add_favorites_label">Add to Favorites</string>
+    <string name="remove_favorites_label">Remove from Favorites</string>
+
+    <string name="add_to_favorites">Added to favorites</string>
+    <string name="remove_from_favorites">Removed from favorites</string>
+
+    <!--favorites-->
+    <string name="favorites_activity_title">Favorites</string>
+
 
 
     <!--for testing-->

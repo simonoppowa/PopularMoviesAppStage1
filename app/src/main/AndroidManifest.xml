@@ -19,6 +19,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieDetailActivity" />
+
+        <provider
+            android:name=".data.MovieContentProvider"
+            android:authorities="com.github.simonoppowa.popularmovies"
+            android:exported="false" />
+
+        <activity android:name=".FavoritesActivity"></activity>
     </application>
 
 </manifest>
