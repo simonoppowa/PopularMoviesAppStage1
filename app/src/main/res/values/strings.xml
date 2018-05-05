@@ -1,7 +1,7 @@
 <resources>
 
     <!--activity_main-->
-    <string name="app_name">Popular Movies App Stage 1</string>
+    <string name="app_name">Popular Movies App</string>
 
     <string name="movie_image_tag">Movie image</string>
 
@@ -21,8 +21,8 @@
     <string name="videos_tag">Videos</string>
     <string name="reviews_tag">Reviews</string>
     <string name="overview_tag">Overview</string>
-    <string name="add_favorites_label">Add to Favorites</string>
-    <string name="remove_favorites_label">Remove from Favorites</string>
+    <string name="add_favorites_label">Add to favorites</string>
+    <string name="remove_favorites_label">Remove from favorites</string>
 
     <string name="add_to_favorites">Added to favorites</string>
     <string name="remove_from_favorites">Removed from favorites</string>

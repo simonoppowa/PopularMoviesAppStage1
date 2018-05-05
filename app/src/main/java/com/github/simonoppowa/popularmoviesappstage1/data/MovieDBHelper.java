@@ -5,16 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.COLUMN_DATE_ADDED;
-import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.COLUMN_MOVIE_ID;
-import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.COLUMN_MOVIE_TITLE;
-import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.FAVORITES_TABLE_NAME;
+import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.*;
 
 public class MovieDBHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "movies.db";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
 
     public MovieDBHelper(Context context) {
@@ -28,7 +25,12 @@ public class MovieDBHelper extends SQLiteOpenHelper{
                         FAVORITES_TABLE_NAME + " ( " +
                         COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY ," +
                         COLUMN_MOVIE_TITLE + " STRING NOT NULL ," +
-                        COLUMN_DATE_ADDED + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"  + " );";
+                        COLUMN_ORIGINAL_MOVIE_TITLE + " STRING NOT NULL ," +
+                        COLUMN_MOVIE_OVERVIEW + " STRING NOT NULL ," +
+                        COLUMN_MOVIE_IMAGEPATH + " STRING NOT NULL ," +
+                        COLUMN_MOVIE_RELEASEDATE + " DATE NOT NULL ," +
+                        COLUMN_MOVIE_USERRATING + " STRING NOT NULL ," +
+                        COLUMN_DATE_ADDED + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" + " );";
 
         Log.d("MYTAG",  SQL_CREATE_MOVIES_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIES_TABLE);

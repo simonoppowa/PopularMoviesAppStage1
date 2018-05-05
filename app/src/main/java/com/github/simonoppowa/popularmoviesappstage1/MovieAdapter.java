@@ -38,6 +38,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     public void setPopularMoviesList(List<Movie> popularMoviesList) {
         mPopularMovieList = popularMoviesList;
+        notifyDataSetChanged();
     }
 
     @NonNull

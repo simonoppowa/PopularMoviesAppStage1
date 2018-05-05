@@ -21,7 +21,7 @@ public class Movie implements Parcelable {
     private String userRating;
     private Date releaseDate;
 
-    //Parcelable Constructor
+    //Parcelable constructor
     private Movie(Parcel input) {
         id = input.readInt();
         title = input.readString();
@@ -108,6 +108,11 @@ public class Movie implements Parcelable {
 
         String yearString = simpleDateRelease.format(releaseDate);
         return yearString;
+    }
+
+    public java.sql.Date getSQLDate() {
+        java.sql.Date sqlDate = new java.sql.Date(releaseDate.getTime());
+        return sqlDate;
     }
 
     @Override

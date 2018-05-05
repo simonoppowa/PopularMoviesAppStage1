@@ -33,6 +33,7 @@ public class MovieContentProvider extends ContentProvider {
         return true;
     }
 
+
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
@@ -86,8 +87,10 @@ public class MovieContentProvider extends ContentProvider {
                 }
                 break;
             default:
-                throw new UnsupportedOperationException("Unsupported operation " + uri);
+                throw new UnsupportedOperationException("Unsupported uri " + uri);
         }
+
+        Log.d("MYTAG","Added new movie");
 
         getContext().getContentResolver().notifyChange(uri, null);
 
@@ -101,8 +104,6 @@ public class MovieContentProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
 
         int moviesDeleted = 0;
-
-        Log.d("MYTAG", uri.toString());
 
         switch (match) {
             case MOVIES:
@@ -119,7 +120,7 @@ public class MovieContentProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Couldn't delete");
         }
 
-        Log.d("MYTAG", moviesDeleted + " movies deleted");
+        Log.d("MYTAG", moviesDeleted + " movie(s) deleted");
 
         if(moviesDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
@@ -145,4 +146,9 @@ public class MovieContentProvider extends ContentProvider {
         return uriMatcher;
     }
 
+    @Override
+    public void shutdown() {
+        mMovieDbHelper.close();
+        super.shutdown();
+    }
 }

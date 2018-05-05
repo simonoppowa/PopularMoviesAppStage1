@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,6 +46,8 @@ import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.M
 public class MovieDetailActivity extends AppCompatActivity implements VideoAdapter.ListItemClickListener{
 
     private static final String MOVIE_KEY = MainActivity.MOVIE_KEY;
+    private static final String VIDEO_KEY = "videos";
+    private static final String REVIEWS_KEY = "reviews";
 
     private RecyclerView mVideoRecyclerView;
     private LinearLayoutManager mHorizontalLinearLayoutManager;
@@ -126,7 +132,23 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 
         showFavoriteButton();
 
-        new ExtraDetailsQueryTask(this).execute();
+        //check for rotation
+        if(savedInstanceState != null && savedInstanceState.containsKey(VIDEO_KEY) && savedInstanceState.containsKey(REVIEWS_KEY)) {
+            mVideoList = savedInstanceState.getParcelableArrayList(VIDEO_KEY);
+            mReviewList = savedInstanceState.getParcelableArrayList(REVIEWS_KEY);
+            checkVideoList();
+            checkReviewList();
+            showExtraDetails();
+        } else {
+            new ExtraDetailsQueryTask(this).execute();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(VIDEO_KEY, (ArrayList<? extends Parcelable>) mVideoList);
+        outState.putParcelableArrayList(REVIEWS_KEY, (ArrayList<? extends Parcelable>) mReviewList);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -210,25 +232,38 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
 
-            //check if videos available
-            if(!mVideoList.isEmpty()) {
-                mVideoAdapter.setVideoList(mVideoList);
-            } else {
-                mVideoRecyclerView.setVisibility(View.GONE);
-                mVideoErrorMessage.setVisibility(View.VISIBLE);
-            }
+            checkVideoList();
+            checkReviewList();
 
-            //check if reviews available
-            if(!mReviewList.isEmpty()) {
-                mReviewAdapter.setReviewList(mReviewList);
-            } else {
-                mReviewRecyclerView.setVisibility(View.GONE);
-                mReviewErrorMessage.setVisibility(View.VISIBLE);
-            }
-
-            mExtraDetailLayout.setVisibility(View.VISIBLE);
-            mExtraDetailProgressBar.setVisibility(View.GONE);
+            showExtraDetails();
         }
+
+    }
+
+    public void showExtraDetails() {
+        mExtraDetailLayout.setVisibility(View.VISIBLE);
+        mExtraDetailProgressBar.setVisibility(View.GONE);
+    }
+
+    public void checkVideoList() {
+        //check if videos available
+        if (!mVideoList.isEmpty()) {
+            mVideoAdapter.setVideoList(mVideoList);
+        } else {
+            mVideoRecyclerView.setVisibility(View.GONE);
+            mVideoErrorMessage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void checkReviewList() {
+        //check if reviews available
+        if (!mReviewList.isEmpty()) {
+            mReviewAdapter.setReviewList(mReviewList);
+        } else {
+            mReviewRecyclerView.setVisibility(View.GONE);
+            mReviewErrorMessage.setVisibility(View.VISIBLE);
+        }
+        showExtraDetails();
     }
 
     public void onFavoritesClicked(View view) {
@@ -238,6 +273,11 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             ContentValues contentValues = new ContentValues();
             contentValues.put(COLUMN_MOVIE_ID, mSelectedMovie.getId());
             contentValues.put(COLUMN_MOVIE_TITLE, mSelectedMovie.getTitle());
+            contentValues.put(COLUMN_ORIGINAL_MOVIE_TITLE, mSelectedMovie.getOriginalTitle());
+            contentValues.put(COLUMN_MOVIE_OVERVIEW, mSelectedMovie.getOverview());
+            contentValues.put(COLUMN_MOVIE_IMAGEPATH, mSelectedMovie.getImagePath());
+            contentValues.put(COLUMN_MOVIE_USERRATING, mSelectedMovie.getUserRating());
+            contentValues.put(COLUMN_MOVIE_RELEASEDATE, String.valueOf(mSelectedMovie.getSQLDate()));
 
             Uri uri = getContentResolver().insert(CONTENT_MOVIES_URL, contentValues);
 
@@ -287,7 +327,6 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
     @Override
     public void onListItemClick(int clickedItemIndex) {
         Uri youtubeLink = Uri.parse(String.valueOf(YoutubeUtils.buildYoutubeVideoLink(mVideoList.get(clickedItemIndex).getKey())));
-
         Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, youtubeLink);
 
         startActivity(youtubeIntent);
