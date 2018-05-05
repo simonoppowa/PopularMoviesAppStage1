@@ -41,11 +41,6 @@ public final class NetworkUtils {
 
     private static String myApiKey;
 
-    /**
-     * Builds URL: https://api.themoviedb.org/3/movie/popular?api_key=___&language=en-US&page=1
-     * @param page
-     * @return
-     */
     public static URL buildPopularMoviesUrlByPopularity(int page) {
 
         myApiKey = BuildConfig.MY_MOVIE_DB_API_KEY;
@@ -122,9 +117,7 @@ public final class NetworkUtils {
     }
 
     public static String buildMovieImageUrlString(String imagePath) {
-        String imageUrl = MOVIEDB_IMAGE_URL + MOVIEDB_IMAGE_SIZE_TAG + imagePath;
-
-        return imageUrl;
+        return MOVIEDB_IMAGE_URL + MOVIEDB_IMAGE_SIZE_TAG + imagePath;
     }
 
 

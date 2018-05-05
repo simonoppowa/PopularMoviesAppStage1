@@ -106,13 +106,11 @@ public class Movie implements Parcelable {
     public String getReleaseYearString() {
         SimpleDateFormat simpleDateRelease = new SimpleDateFormat("yyyy", Locale.getDefault());
 
-        String yearString = simpleDateRelease.format(releaseDate);
-        return yearString;
+        return simpleDateRelease.format(releaseDate);
     }
 
     public java.sql.Date getSQLDate() {
-        java.sql.Date sqlDate = new java.sql.Date(releaseDate.getTime());
-        return sqlDate;
+        return new java.sql.Date(releaseDate.getTime());
     }
 
     @Override

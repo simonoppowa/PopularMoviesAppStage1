@@ -29,6 +29,11 @@
 
     <!--favorites-->
     <string name="favorites_activity_title">Favorites</string>
+    
+    <!-- ally -->
+    <string name="favorites_icon">Favorite icon</string>
+    <string name="video_thumbnail">Video thumbnail</string>
+    <string name="star_icon">Star icon</string>
 
 
 

@@ -65,10 +65,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public final ImageView videoImageIV;
-        public final TextView videoNameTV;
+        private final ImageView videoImageIV;
+        private final TextView videoNameTV;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
 
             videoImageIV = itemView.findViewById(R.id.video_image);

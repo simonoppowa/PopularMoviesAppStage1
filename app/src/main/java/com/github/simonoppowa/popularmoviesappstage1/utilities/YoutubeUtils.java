@@ -9,15 +9,15 @@ import java.net.URL;
 public class YoutubeUtils {
 
     //youtube video link
-    private static String YOUTUBE_VIDEO_BASE_URL = "https://www.youtube.com/watch";
-    private static String YOUTUBE_YOUTUBE_VIDEO_KEY_QUERY_TAG = "v";
+    private static final String YOUTUBE_VIDEO_BASE_URL = "https://www.youtube.com/watch";
+    private static final String YOUTUBE_YOUTUBE_VIDEO_KEY_QUERY_TAG = "v";
 
 
     //youtube thumbnail image
-    private static String YOUTUBE_TN_BASE_URL = "https://img.youtube.com/vi/";
-    private static String YOUTUBE_TN_QUALTITY_TAG = "default";
-    private static String YOUTUBE_TN_HDQUALTITY_TAG = "hqdefault";
-    private static String YOUTUBE_TN_FORMAT_TAG = ".jpg";
+    private static final String YOUTUBE_TN_BASE_URL = "https://img.youtube.com/vi/";
+    private static final String YOUTUBE_TN_QUALITY_TAG = "default";
+    private static final String YOUTUBE_TN_HDQUALITY_TAG = "hqdefault";
+    private static final String YOUTUBE_TN_FORMAT_TAG = ".jpg";
 
 
     public static Uri buildYoutubeVideoLink(String videoKey) {
@@ -33,7 +33,7 @@ public class YoutubeUtils {
     public static URL buildYoutubeThumbnailURL(String videoKey) {
         Uri builtUri = Uri.parse(YOUTUBE_TN_BASE_URL).buildUpon()
                 .appendPath(videoKey)
-                .appendPath(YOUTUBE_TN_HDQUALTITY_TAG + YOUTUBE_TN_FORMAT_TAG)
+                .appendPath(YOUTUBE_TN_HDQUALITY_TAG + YOUTUBE_TN_FORMAT_TAG)
                 .build();
 
         URL builtUrl = NetworkUtils.buildUrl(builtUri);

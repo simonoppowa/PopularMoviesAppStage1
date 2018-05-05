@@ -50,10 +50,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final TextView reviewAuthorTV;
-        public final TextView reviewContentTV;
+        private final TextView reviewAuthorTV;
+        private final TextView reviewContentTV;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
 
             reviewAuthorTV = itemView.findViewById(R.id.review_author_name);

@@ -27,9 +27,9 @@ public class MovieDBHelper extends SQLiteOpenHelper{
                         COLUMN_MOVIE_TITLE + " STRING NOT NULL ," +
                         COLUMN_ORIGINAL_MOVIE_TITLE + " STRING NOT NULL ," +
                         COLUMN_MOVIE_OVERVIEW + " STRING NOT NULL ," +
-                        COLUMN_MOVIE_IMAGEPATH + " STRING NOT NULL ," +
-                        COLUMN_MOVIE_RELEASEDATE + " DATE NOT NULL ," +
-                        COLUMN_MOVIE_USERRATING + " STRING NOT NULL ," +
+                        COLUMN_MOVIE_IMAGE_PATH + " STRING NOT NULL ," +
+                        COLUMN_MOVIE_RELEASE_DATE + " DATE NOT NULL ," +
+                        COLUMN_MOVIE_USER_RATING + " STRING NOT NULL ," +
                         COLUMN_DATE_ADDED + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" + " );";
 
         Log.d("MYTAG",  SQL_CREATE_MOVIES_TABLE);

@@ -2,20 +2,15 @@ package com.github.simonoppowa.popularmoviesappstage1;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.*;
-import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.COLUMN_MOVIE_ID;
 
 public class MovieDetailActivity extends AppCompatActivity implements VideoAdapter.ListItemClickListener{
 
@@ -104,13 +98,13 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 
         Intent intent = getIntent();
 
-        mSelectedMovie = (Movie) intent.getParcelableExtra(MOVIE_KEY);
+        mSelectedMovie = intent.getParcelableExtra(MOVIE_KEY);
 
         if(mSelectedMovie == null) {
             throw new NullPointerException("No Movie was passed to MovieDetailActivity");
         }
 
-        //video recyclcerview
+        //video recyclerView
         mVideoRecyclerView = findViewById(R.id.video_item_recycler_view);
         mHorizontalLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
         mVideoRecyclerView.setLayoutManager(mHorizontalLinearLayoutManager);
@@ -119,7 +113,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
 
         mVideoRecyclerView.setAdapter(mVideoAdapter);
 
-        //review recyclerview
+        //review recyclerView
         mReviewRecyclerView = findViewById(R.id.review_item_recycler_view);
         mVerticalLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mReviewRecyclerView.setLayoutManager(mVerticalLinearLayoutManager);
@@ -140,7 +134,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             checkReviewList();
             showExtraDetails();
         } else {
-            new ExtraDetailsQueryTask(this).execute();
+            new ExtraDetailsQueryTask().execute();
         }
     }
 
@@ -192,7 +186,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
                 if(cursor == null || cursor.getCount() == 0) {
                     setButtonNoFavorite();
                 } else {
-                    setButttonFavorite();
+                    setButtonFavorite();
                 }
 
                 mFavoritesButton.setVisibility(View.VISIBLE);
@@ -201,16 +195,10 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         }.execute();
     }
 
-    public class ExtraDetailsQueryTask extends AsyncTask {
-
-        private final Context context;
-
-        ExtraDetailsQueryTask(Context context) {
-            this.context = context;
-        }
+    private class ExtraDetailsQueryTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected Object doInBackground(Object[] objects) {
+        protected Void doInBackground(Void... voids) {
             try {
                 //videos
                 URL videosUrl = NetworkUtils.buildMovieVideosUrl(mSelectedMovie.getId());
@@ -229,23 +217,22 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         }
 
         @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
 
             checkVideoList();
             checkReviewList();
 
             showExtraDetails();
         }
-
     }
 
-    public void showExtraDetails() {
+    private void showExtraDetails() {
         mExtraDetailLayout.setVisibility(View.VISIBLE);
         mExtraDetailProgressBar.setVisibility(View.GONE);
     }
 
-    public void checkVideoList() {
+    private void checkVideoList() {
         //check if videos available
         if (!mVideoList.isEmpty()) {
             mVideoAdapter.setVideoList(mVideoList);
@@ -255,7 +242,7 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
         }
     }
 
-    public void checkReviewList() {
+    private void checkReviewList() {
         //check if reviews available
         if (!mReviewList.isEmpty()) {
             mReviewAdapter.setReviewList(mReviewList);
@@ -275,9 +262,9 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             contentValues.put(COLUMN_MOVIE_TITLE, mSelectedMovie.getTitle());
             contentValues.put(COLUMN_ORIGINAL_MOVIE_TITLE, mSelectedMovie.getOriginalTitle());
             contentValues.put(COLUMN_MOVIE_OVERVIEW, mSelectedMovie.getOverview());
-            contentValues.put(COLUMN_MOVIE_IMAGEPATH, mSelectedMovie.getImagePath());
-            contentValues.put(COLUMN_MOVIE_USERRATING, mSelectedMovie.getUserRating());
-            contentValues.put(COLUMN_MOVIE_RELEASEDATE, String.valueOf(mSelectedMovie.getSQLDate()));
+            contentValues.put(COLUMN_MOVIE_IMAGE_PATH, mSelectedMovie.getImagePath());
+            contentValues.put(COLUMN_MOVIE_USER_RATING, mSelectedMovie.getUserRating());
+            contentValues.put(COLUMN_MOVIE_RELEASE_DATE, String.valueOf(mSelectedMovie.getSQLDate()));
 
             Uri uri = getContentResolver().insert(CONTENT_MOVIES_URL, contentValues);
 
@@ -286,10 +273,9 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
                 Toast toast = Toast.makeText(this, R.string.add_to_favorites, Toast.LENGTH_SHORT);
                 toast.show();
 
-                setButttonFavorite();
-
+                setButtonFavorite();
             } else {
-                //TODO couldn't insert movie
+                throw new UnsupportedOperationException("Couldn't insert to favorites");
             }
 
 
@@ -307,12 +293,12 @@ public class MovieDetailActivity extends AppCompatActivity implements VideoAdapt
             if(deleted != 0) {
                 setButtonNoFavorite();
             } else {
-                //TODO couldn't deleted movie
+                throw new UnsupportedOperationException("Couldn't delete movie from favorites");
             }
         }
     }
 
-    private void setButttonFavorite() {
+    private void setButtonFavorite() {
         mFavoritesButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_36px));
         mFavoritesLabel.setText(R.string.remove_favorites_label);
         isFavorite = true;

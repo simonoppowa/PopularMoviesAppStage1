@@ -68,15 +68,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public final ImageView movieImageIV;
-        public final TextView titleTV;
+        private final ImageView movieImageIV;
+        private final TextView titleTV;
 
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
 
-            movieImageIV = (ImageView) itemView.findViewById(R.id.movie_image);
-            titleTV = (TextView) itemView.findViewById(R.id.movie_title);
+            movieImageIV = itemView.findViewById(R.id.movie_image);
+            titleTV = itemView.findViewById(R.id.movie_title);
 
             itemView.setOnClickListener(this);
 

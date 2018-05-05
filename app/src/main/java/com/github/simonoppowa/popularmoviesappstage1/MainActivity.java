@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMovieRecyclerView = (RecyclerView) findViewById(R.id.movie_card_recycler_view);
-        mErrorTextView = (TextView) findViewById(R.id.error_message_TV);
+        mMovieRecyclerView = findViewById(R.id.movie_card_recycler_view);
+        mErrorTextView = findViewById(R.id.error_message_TV);
 
         //creating list
         mPopularMovies = new ArrayList<>();
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         mErrorTextView.setVisibility(View.INVISIBLE);
     }
 
-    public void createRecyclerView() {
+    private void createRecyclerView() {
         mGridLayoutManager = new GridLayoutManager(this, NUMBER_COLUMNS);
         mMovieRecyclerView.setLayoutManager(mGridLayoutManager);
 

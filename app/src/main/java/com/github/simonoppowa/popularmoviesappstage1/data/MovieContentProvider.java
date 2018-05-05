@@ -14,6 +14,8 @@ import android.util.Log;
 
 import com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry;
 
+import java.util.Objects;
+
 import static com.github.simonoppowa.popularmoviesappstage1.data.MovieContract.MovieEntry.*;
 
 public class MovieContentProvider extends ContentProvider {
@@ -74,7 +76,7 @@ public class MovieContentProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
 
-        Uri returnUri = null;
+        Uri returnUri;
 
         switch (match) {
             case  MOVIES:
@@ -92,7 +94,7 @@ public class MovieContentProvider extends ContentProvider {
 
         Log.d("MYTAG","Added new movie");
 
-        getContext().getContentResolver().notifyChange(uri, null);
+        Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
 
         return returnUri;
     }
@@ -103,7 +105,7 @@ public class MovieContentProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
 
-        int moviesDeleted = 0;
+        int moviesDeleted;
 
         switch (match) {
             case MOVIES:
@@ -123,7 +125,7 @@ public class MovieContentProvider extends ContentProvider {
         Log.d("MYTAG", moviesDeleted + " movie(s) deleted");
 
         if(moviesDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
 
         return moviesDeleted;

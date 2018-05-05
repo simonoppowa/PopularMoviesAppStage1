@@ -69,8 +69,8 @@ public class FavoritesActivity extends AppCompatActivity implements MovieAdapter
                 null,
                 COLUMN_DATE_ADDED + " DESC");
 
-        while(moviesCursor.moveToNext()) {
-            Long releaseDateString = moviesCursor.getLong(moviesCursor.getColumnIndex(COLUMN_MOVIE_RELEASEDATE));
+        while(moviesCursor != null && moviesCursor.moveToNext()) {
+            Long releaseDateString = moviesCursor.getLong(moviesCursor.getColumnIndex(COLUMN_MOVIE_RELEASE_DATE));
             Date releaseDate = new Date(releaseDateString);
 
             Movie newMovie = new Movie(
@@ -78,13 +78,15 @@ public class FavoritesActivity extends AppCompatActivity implements MovieAdapter
                     moviesCursor.getString(moviesCursor.getColumnIndex(COLUMN_MOVIE_TITLE)),
                     moviesCursor.getString(moviesCursor.getColumnIndex(COLUMN_ORIGINAL_MOVIE_TITLE)),
                     moviesCursor.getString(moviesCursor.getColumnIndex(COLUMN_MOVIE_OVERVIEW)),
-                    moviesCursor.getString(moviesCursor.getColumnIndex(COLUMN_MOVIE_IMAGEPATH)),
-                    moviesCursor.getString(moviesCursor.getColumnIndex(COLUMN_MOVIE_USERRATING)),
+                    moviesCursor.getString(moviesCursor.getColumnIndex(COLUMN_MOVIE_IMAGE_PATH)),
+                    moviesCursor.getString(moviesCursor.getColumnIndex(COLUMN_MOVIE_USER_RATING)),
                     releaseDate);
             mFavoritesMoviesList.add(newMovie);
         }
 
         mMovieAdapter.setPopularMoviesList(mFavoritesMoviesList);
+
+        moviesCursor.close();
     }
 
     @Override

@@ -46,7 +46,7 @@
                         android:id="@+id/release_date_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="8dp"
                         android:textAppearance="@android:style/TextAppearance.Material.Small"
                         android:textSize="16sp"
                         tools:text="2018" />
@@ -55,7 +55,7 @@
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp">
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:id="@+id/rating_tv"
@@ -68,6 +68,7 @@
 
                         <ImageView
                             android:id="@+id/star_icon"
+                            android:contentDescription="@string/star_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
