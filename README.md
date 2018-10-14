@@ -22,6 +22,11 @@ You will build a fully featured application that looks and feels natural on the 
 ### Usage
 __Add your API KEY in gradle.properties__
 
+### Screenshots
+![](https://github.com/simonoppowa/PopularMoviesAppStage2/blob/master/screens/screenshot1.png?raw=true)
+![](https://github.com/simonoppowa/PopularMoviesAppStage2/blob/master/screens/screenshot2.png?raw=true)
+![](https://github.com/simonoppowa/PopularMoviesAppStage2/blob/master/screens/screenshot3.png?raw=true)
+
 ### Libraries used
 * [Picasso](https://github.com/square/picasso)
 
